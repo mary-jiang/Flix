@@ -11,8 +11,9 @@
 
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate> //this class implements these protocols (promise that we will implement methods inside of these protocols, like interface in Java)
 
-@property (nonatomic, strong) NSArray *movies;
+@property (nonatomic, strong) NSArray *movies; //making basically like a private array so we can refer to it in all functions
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -23,6 +24,17 @@
     
     self.tableView.dataSource = self; //setting datasource to view controller (self), will call 2 data source req functions on this view controller
     self.tableView.delegate = self;
+    
+    [self fetchMovies]; //when view loads get movies
+    
+    self.refreshControl = [[UIRefreshControl alloc] init]; //this is similar to making an object in Java
+    [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged]; //refreshControl targets self (this view controller) and will call fetchMovies on it for the control events when event value changed
+    [self.tableView insertSubview:self.refreshControl atIndex:0]; //inserts the refresh control spinny thing on the top, knows scrolling is parent and makes it so when we pull down it will start refreshing (what happens when we start refreshing is defined line before)
+    
+    // Do any additional setup after loading the view.
+}
+
+- (void)fetchMovies {
     
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
@@ -45,10 +57,9 @@
                // TODO: Store the movies in a property to use elsewhere
                // TODO: Reload your table view data
            }
+        [self.refreshControl endRefreshing]; //once we get our data we have to tell refresh control to stop refreshing manually
        }];
     [task resume];
-    
-    // Do any additional setup after loading the view.
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -70,7 +81,7 @@
     NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString]; //combine the two portions aboce to make a full poster url
     
     NSURL *posterURL = [NSURL URLWithString:fullPosterURLString]; //NSURL is a string that checks to see if it's a valid url
-    cell.posterView.image = nil; //clear out previous image, blank it out before it downloads a new one 
+    cell.posterView.image = nil; //clear out previous image, blank it out before it downloads a new one
     [cell.posterView setImageWithURL:posterURL]; //sets the UIImage that is posterView to the proper image url
     
     return cell;
