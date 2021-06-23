@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		AAB6359F26838DCE00107C94 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB6359E26838DCE00107C94 /* AppDelegate.m */; };
 		AAB635A226838DCE00107C94 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB635A126838DCE00107C94 /* SceneDelegate.m */; };
-		AAB635A526838DCE00107C94 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB635A426838DCE00107C94 /* ViewController.m */; };
 		AAB635A826838DCE00107C94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAB635A626838DCE00107C94 /* Main.storyboard */; };
 		AAB635AA26838DCF00107C94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAB635A926838DCF00107C94 /* Assets.xcassets */; };
 		AAB635AD26838DCF00107C94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAB635AB26838DCF00107C94 /* LaunchScreen.storyboard */; };
 		AAB635B026838DCF00107C94 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB635AF26838DCF00107C94 /* main.m */; };
 		AAB635BA26838DCF00107C94 /* FlixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB635B926838DCF00107C94 /* FlixTests.m */; };
 		AAB635C526838DCF00107C94 /* FlixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB635C426838DCF00107C94 /* FlixUITests.m */; };
+		AAB635D42683980C00107C94 /* MoviesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB635D32683980C00107C94 /* MoviesViewController.m */; };
+		AAB635DA2683A5BD00107C94 /* MovieCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB635D92683A5BD00107C94 /* MovieCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,8 +42,6 @@
 		AAB6359E26838DCE00107C94 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		AAB635A026838DCE00107C94 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		AAB635A126838DCE00107C94 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		AAB635A326838DCE00107C94 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		AAB635A426838DCE00107C94 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		AAB635A726838DCE00107C94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AAB635A926838DCF00107C94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAB635AC26838DCF00107C94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -54,6 +53,10 @@
 		AAB635C026838DCF00107C94 /* FlixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlixUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAB635C426838DCF00107C94 /* FlixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlixUITests.m; sourceTree = "<group>"; };
 		AAB635C626838DCF00107C94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AAB635D22683980C00107C94 /* MoviesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoviesViewController.h; sourceTree = "<group>"; };
+		AAB635D32683980C00107C94 /* MoviesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoviesViewController.m; sourceTree = "<group>"; };
+		AAB635D82683A5BD00107C94 /* MovieCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovieCell.h; sourceTree = "<group>"; };
+		AAB635D92683A5BD00107C94 /* MovieCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MovieCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,12 +107,13 @@
 		AAB6359C26838DCE00107C94 /* Flix */ = {
 			isa = PBXGroup;
 			children = (
+				AAB635D726839C8900107C94 /* Models */,
+				AAB635D626839C7E00107C94 /* Views */,
+				AAB635D526839C6F00107C94 /* ViewControllers */,
 				AAB6359D26838DCE00107C94 /* AppDelegate.h */,
 				AAB6359E26838DCE00107C94 /* AppDelegate.m */,
 				AAB635A026838DCE00107C94 /* SceneDelegate.h */,
 				AAB635A126838DCE00107C94 /* SceneDelegate.m */,
-				AAB635A326838DCE00107C94 /* ViewController.h */,
-				AAB635A426838DCE00107C94 /* ViewController.m */,
 				AAB635A626838DCE00107C94 /* Main.storyboard */,
 				AAB635A926838DCF00107C94 /* Assets.xcassets */,
 				AAB635AB26838DCF00107C94 /* LaunchScreen.storyboard */,
@@ -135,6 +139,31 @@
 				AAB635C626838DCF00107C94 /* Info.plist */,
 			);
 			path = FlixUITests;
+			sourceTree = "<group>";
+		};
+		AAB635D526839C6F00107C94 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				AAB635D22683980C00107C94 /* MoviesViewController.h */,
+				AAB635D32683980C00107C94 /* MoviesViewController.m */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		AAB635D626839C7E00107C94 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AAB635D82683A5BD00107C94 /* MovieCell.h */,
+				AAB635D92683A5BD00107C94 /* MovieCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AAB635D726839C8900107C94 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,10 +295,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAB635A526838DCE00107C94 /* ViewController.m in Sources */,
 				AAB6359F26838DCE00107C94 /* AppDelegate.m in Sources */,
+				AAB635DA2683A5BD00107C94 /* MovieCell.m in Sources */,
 				AAB635B026838DCF00107C94 /* main.m in Sources */,
 				AAB635A226838DCE00107C94 /* SceneDelegate.m in Sources */,
+				AAB635D42683980C00107C94 /* MoviesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
