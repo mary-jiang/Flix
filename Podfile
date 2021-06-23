@@ -7,6 +7,7 @@ target 'Flix' do
 
   # Pods for Flix
   pod 'AFNetworking'
+  pod 'Reachability', '~> 3.2'
 
   target 'FlixTests' do
     inherit! :search_paths
