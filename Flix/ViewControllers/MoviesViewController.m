@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSArray *movies; //making basically like a private array so we can refer to it in all functions
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 
 @end
 
@@ -28,6 +29,8 @@
     
     [self fetchMovies]; //when view loads get movies
     
+    self.activityIndicatorView.hidesWhenStopped = true; //make sure that the loading circle hides once it's stopped and we no longer want to indicate that things are loading
+    
     self.refreshControl = [[UIRefreshControl alloc] init]; //this is similar to making an object in Java
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged]; //refreshControl targets self (this view controller) and will call fetchMovies on it for the control events when event value changed
     [self.tableView insertSubview:self.refreshControl atIndex:0]; //inserts the refresh control spinny thing on the top, knows scrolling is parent and makes it so when we pull down it will start refreshing (what happens when we start refreshing is defined line before)
@@ -36,6 +39,8 @@
 }
 
 - (void)fetchMovies {
+    
+    [self.activityIndicatorView startAnimating]; //start animating the loading thing when we fetch movies
     
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
@@ -59,8 +64,13 @@
                // TODO: Reload your table view data
            }
         [self.refreshControl endRefreshing]; //once we get our data we have to tell refresh control to stop refreshing manually
+        
+        [self.activityIndicatorView stopAnimating]; //after we stop loading the movies we should stop animating the thing
+       
        }];
     [task resume];
+    
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
