@@ -8,6 +8,7 @@
 #import "MoviesViewController.h"
 #import "MovieCell.h" //import our custom movie cell
 #import "UIImageView+AFNetworking.h" //add helper methods that weren't part of orgiinal to UIImageView (categories)
+#import "DetailsViewController.h" //import the detailsviewcontroller
 
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate> //this class implements these protocols (promise that we will implement methods inside of these protocols, like interface in Java)
 
@@ -87,14 +88,21 @@
     return cell;
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender { //called when about to leave this view controller, anything you want to send to the new destination view controller?
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    UITableViewCell *tappedCell = sender; //tapped cell is what is sending us to another
+    NSIndexPath *indexPath  = [self.tableView indexPathForCell:tappedCell]; //asking the table view to get us the index of said tapped cell (indexPath is a struct)
+    NSDictionary *movie = self.movies[indexPath.row]; //getting the corrosponding movie out of the array for the cell that was just tapped on
+    
+    DetailsViewController *detailsViewController = [segue destinationViewController];
+    detailsViewController.movie = movie; //pass over the movie that was tapped to the details view controller so they can do what they want with it
 }
-*/
+
 
 @end
