@@ -7,9 +7,8 @@
 
 #import "MoviesViewController.h"
 #import "MovieCell.h" //import our custom movie cell
-#import "UIImageView+AFNetworking.h" //add helper methods that weren't part of orgiinal to UIImageView (categories)
+#import "UIImageView+AFNetworking.h" //add helper methods that weren't part of orginal to UIImageView (categories)
 #import "DetailsViewController.h" //import the detailsviewcontroller
-#import "Reachability.h" //import reachability, which will help us figure out if user is connected to the internet or not
 
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate> //this class implements these protocols (promise that we will implement methods inside of these protocols, like interface in Java)
 
@@ -61,11 +60,13 @@
            if (error != nil) {
                NSLog(@"%@", [error localizedDescription]);
                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Could not retrieve movies. Please check your connection and try again." preferredStyle: UIAlertControllerStyleAlert]; //creates an alert controller with title and message
-               UIAlertAction *tryAgain = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){}]; //creates an action that doesn't really do anything but put a button on our alert that user can press to submit
+               UIAlertAction *tryAgain = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+                    [self fetchMovies]; //once they hit try again try to fetch movies again
+                    }]; //creates an action that doesn't really do anything but put a button on our alert that user can press to submit
                [alert addAction:tryAgain]; //adds action to the alert controller
                
                [self presentViewController:alert animated:true completion:^{}]; //make the alert appear on screen
-               [self fetchMovies]; //once they hit try again try to fetch movies again
+              
            }
            else {
                NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
@@ -77,13 +78,15 @@
 //                   NSLog(@"%@", movie[@"title"]);
 //               }
                [self.tableView reloadData]; //data may have changed so call data source methods again
+               
+               [self.activityIndicatorView stopAnimating]; //after we stop loading the movies we should stop animating the thing
                // TODO: Get the array of movies
                // TODO: Store the movies in a property to use elsewhere
                // TODO: Reload your table view data
            }
         [self.refreshControl endRefreshing]; //once we get our data we have to tell refresh control to stop refreshing manually
         
-        [self.activityIndicatorView stopAnimating]; //after we stop loading the movies we should stop animating the thing
+        
        
        }];
     [task resume];
