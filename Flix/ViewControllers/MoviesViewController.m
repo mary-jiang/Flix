@@ -10,12 +10,14 @@
 #import "UIImageView+AFNetworking.h" //add helper methods that weren't part of orginal to UIImageView (categories)
 #import "DetailsViewController.h" //import the detailsviewcontroller
 
-@interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate> //this class implements these protocols (promise that we will implement methods inside of these protocols, like interface in Java)
+@interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate> //this class implements these protocols (promise that we will implement methods inside of these protocols, like interface in Java)
 
 @property (nonatomic, strong) NSArray *movies; //making basically like a private array so we can refer to it in all functions
+@property (nonatomic, strong) NSArray *filteredMovies;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
 
@@ -27,6 +29,7 @@
     
     self.tableView.dataSource = self; //setting datasource to view controller (self), will call 2 data source req functions on this view controller
     self.tableView.delegate = self;
+    self.searchBar.delegate = self;
     
     [self fetchMovies]; //when view loads get movies
     
@@ -42,7 +45,7 @@
     
     [self.activityIndicatorView startAnimating]; //start animating the loading thing when we fetch movies
     
-    NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
+    NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/popular?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -61,7 +64,8 @@
                NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                
                self.movies = dataDictionary[@"results"]; //puts everything in results from api into movies array
-
+               self.filteredMovies = self.movies;
+               
                [self.tableView reloadData]; //data may have changed so call data source methods again
                
                [self.activityIndicatorView stopAnimating]; //after we stop loading the movies we should stop animating the thing
@@ -75,14 +79,14 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.movies.count; //how many rows we have is equal to how many movies we have
+    return self.filteredMovies.count; //how many rows we have is equal to how many movies we have
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"]; //dequeue means when we have something loaded and don't need it anymore put it in some reusable bag, only create from scratch if we haven't seein it before
     
-    NSDictionary *movie = self.movies[indexPath.row]; //access the corrosponding movie from the array, indexPath.row is the row this cell is in in the table
+    NSDictionary *movie = self.filteredMovies[indexPath.row]; //access the corrosponding movie from the array, indexPath.row is the row this cell is in in the table
     
     //set the labels to have information based on which movie this cell is displaying
     cell.titleLabel.text = movie[@"title"];
@@ -99,7 +103,23 @@
     return cell;
 }
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+    if (searchText.length != 0) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
+                    return [evaluatedObject[@"title"] hasPrefix:searchText]; //gets title out of dictionary and see if it has the prefix of whatever is in the search bar
+                }];
+       self.filteredMovies = [self.movies filteredArrayUsingPredicate:predicate]; //filter array with an established predicate
 
+    }
+    else {
+        self.filteredMovies = self.movies;
+    }
+    
+    [self.tableView reloadData];
+ 
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

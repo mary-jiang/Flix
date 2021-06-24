@@ -13,7 +13,7 @@
         <scene sceneID="9KR-57-gOG">
             <objects>
                 <navigationController id="zzn-lt-KUO" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Now Playing" id="EXp-0v-nYA"/>
+                    <tabBarItem key="tabBarItem" title="Now Playing" image="now_playing_tabbar_item" selectedImage="now_playing_tabbar_item" id="EXp-0v-nYA"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Nva-Y9-tO0">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -26,12 +26,12 @@
             </objects>
             <point key="canvasLocation" x="-1739" y="-708"/>
         </scene>
-        <!--Poster View-->
+        <!--Popular-->
         <scene sceneID="rg3-6X-nec">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0LL-TT-WY0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController id="E25-FD-K3K" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Poster View" id="9Lh-Nj-80c"/>
+                    <tabBarItem key="tabBarItem" title="Popular" image="ticket_tabbar_icon" selectedImage="ticket_tabbar_icon" id="9Lh-Nj-80c"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bjw-vK-GEB">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -43,7 +43,7 @@
             </objects>
             <point key="canvasLocation" x="583" y="-708"/>
         </scene>
-        <!--Movies Grid View Controller-->
+        <!--Popular-->
         <scene sceneID="g83-PT-HQY">
             <objects>
                 <viewController id="rP6-nJ-GM9" customClass="MoviesGridViewController" sceneMemberID="viewController">
@@ -87,7 +87,7 @@
                         <viewLayoutGuide key="safeArea" id="1On-9z-diU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="HJN-K0-WkL"/>
+                    <navigationItem key="navigationItem" title="Popular" id="HJN-K0-WkL"/>
                     <connections>
                         <outlet property="collectionView" destination="EaC-lH-bkm" id="Hmt-jn-qlv"/>
                     </connections>
@@ -108,9 +108,14 @@
                                 <rect key="frame" x="0.0" y="46" width="414" height="850"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" id="D2v-ba-YrN">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieCell" rowHeight="221" id="MUy-TP-ai0" customClass="MovieCell">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="221"/>
+                                        <rect key="frame" x="0.0" y="68.5" width="414" height="221"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MUy-TP-ai0" id="nch-vn-gTe">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="221"/>
@@ -158,6 +163,7 @@
                     <navigationItem key="navigationItem" title="Now Playing" id="j2t-GD-NfH"/>
                     <connections>
                         <outlet property="activityIndicatorView" destination="iUd-V3-U8F" id="Tdr-fU-uQf"/>
+                        <outlet property="searchBar" destination="D2v-ba-YrN" id="xRn-ga-dz5"/>
                         <outlet property="tableView" destination="e1Q-LI-irJ" id="HBu-k1-acV"/>
                     </connections>
                 </viewController>
@@ -242,6 +248,8 @@
         <segue reference="FkD-cM-Gr8"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="now_playing_tabbar_item" width="21" height="21"/>
+        <image name="ticket_tabbar_icon" width="25" height="25"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
