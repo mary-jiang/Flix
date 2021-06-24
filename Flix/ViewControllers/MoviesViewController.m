@@ -23,17 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Title" message:@"Message" preferredStyle: UIAlertControllerStyleAlert]; //creates an alert controller with title and message
-    UIAlertAction *tryAgain = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){}]; //creates an action that doesn't really do anything but put a button on our alert that user can press to submit
-    [alert addAction:tryAgain]; //adds action to the alert controller
-
-//    if([[Reachability reachabilityForInternetConnection]currentReachabilityStatus]==NotReachable) //use reachability to check if we can reach the internet or not, run this until we have internet
-//        {
-//            //connection unavailable
-//            [self presentViewController:alert animated:true completion:^{}]; //makes the alert show up on screen as we have no connecton
-//        }
-    
+    // Do any additional setup after loading the view.
     
     self.tableView.dataSource = self; //setting datasource to view controller (self), will call 2 data source req functions on this view controller
     self.tableView.delegate = self;
@@ -46,7 +36,6 @@
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged]; //refreshControl targets self (this view controller) and will call fetchMovies on it for the control events when event value changed
     [self.tableView insertSubview:self.refreshControl atIndex:0]; //inserts the refresh control spinny thing on the top, knows scrolling is parent and makes it so when we pull down it will start refreshing (what happens when we start refreshing is defined line before)
     
-    // Do any additional setup after loading the view.
 }
 
 - (void)fetchMovies {
@@ -62,7 +51,7 @@
                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Could not retrieve movies. Please check your connection and try again." preferredStyle: UIAlertControllerStyleAlert]; //creates an alert controller with title and message
                UIAlertAction *tryAgain = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
                     [self fetchMovies]; //once they hit try again try to fetch movies again
-                    }]; //creates an action that doesn't really do anything but put a button on our alert that user can press to submit
+                    }]; //creates an action to try fetching movies again when pressed
                [alert addAction:tryAgain]; //adds action to the alert controller
                
                [self presentViewController:alert animated:true completion:^{}]; //make the alert appear on screen
@@ -71,22 +60,13 @@
            else {
                NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                
-               //NSLog(@"%@", dataDictionary); //just prints out the dictionary we fetched using api
-               
                self.movies = dataDictionary[@"results"]; //puts everything in results from api into movies array
-//               for(NSDictionary *movie in movies){
-//                   NSLog(@"%@", movie[@"title"]);
-//               }
+
                [self.tableView reloadData]; //data may have changed so call data source methods again
                
                [self.activityIndicatorView stopAnimating]; //after we stop loading the movies we should stop animating the thing
-               // TODO: Get the array of movies
-               // TODO: Store the movies in a property to use elsewhere
-               // TODO: Reload your table view data
            }
         [self.refreshControl endRefreshing]; //once we get our data we have to tell refresh control to stop refreshing manually
-        
-        
        
        }];
     [task resume];
@@ -100,13 +80,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"]; //dequeue means when we have something loaded and don't need it anymore put it in some reusable bag, only create from scratch if we haven't seein it before, if not found create a cell looking like our story board cell that's asscoiated with MovieCell.m and MovieCell.h
+    MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"]; //dequeue means when we have something loaded and don't need it anymore put it in some reusable bag, only create from scratch if we haven't seein it before
     
     NSDictionary *movie = self.movies[indexPath.row]; //access the corrosponding movie from the array, indexPath.row is the row this cell is in in the table
     
-    cell.titleLabel.text = movie[@"title"]; //set the titlelabel in the cell to be the title of the movie (accessed through the api)
-    cell.synopsisLabel.text = movie[@"overview"]; //set the synoposilabel in the cell to be synopsis of the movie
-    //cell.textLabel.text = movie[@"title"];
+    //set the labels to have information based on which movie this cell is displaying
+    cell.titleLabel.text = movie[@"title"];
+    cell.synopsisLabel.text = movie[@"overview"];
     
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500"; //base url given my movieapi documentation that we append all the poster paths unique to each movie to actually access each movie's poster
     NSString *posterURLString = movie[@"poster_path"]; //partial url that corrosponds to movie's poster
