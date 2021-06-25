@@ -98,12 +98,31 @@
     
     NSURL *posterURL = [NSURL URLWithString:fullPosterURLString]; //NSURL is a string that checks to see if it's a valid url
     cell.posterView.image = nil; //clear out previous image, blank it out before it downloads a new one
-    [cell.posterView setImageWithURL:posterURL]; //sets the UIImage that is posterView to the proper image url
+    //[cell.posterView setImageWithURL:posterURL]; //sets the UIImage that is posterView to the proper image url
+    
+    //makes pictures fade in when they load
+    NSURLRequest *request = [NSURLRequest requestWithURL:posterURL];
+    [cell.posterView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
+        //imageResponse is null if image is cached
+        if(imageResponse){ //image is not cached
+            cell.posterView.alpha = 0.0; //make invisible
+            cell.posterView.image = image; //update image
+            
+            [UIView animateWithDuration:0.3 animations:^{ //over the course of time duration sec make poster visible
+                cell.posterView.alpha = 1.0;
+            }];
+        }else{ //image is cached
+            cell.posterView.image = image; //update image
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        //do nothing for now if it fails
+    }];
     
     return cell;
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    self.searchBar.showsCancelButton = true; //so we can cancel out of our search bar
     
     if (searchText.length != 0) {
         
@@ -120,6 +139,13 @@
     [self.tableView reloadData];
  
 }
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    self.searchBar.showsCancelButton = false; //hide the cancel button once they cancle
+    self.searchBar.text = @""; //clear out all the text in search bar
+    [self.searchBar resignFirstResponder]; //hide keyboard
+}
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
