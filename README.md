@@ -2,7 +2,7 @@
 
 Flix is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: 7 hours spent in total
+Time spent: 18 hours spent in total
 
 ## User Stories
 
@@ -24,8 +24,8 @@ The following **optional** features are implemented:
 - [ ] User can view the large movie poster by tapping on a cell.
 - [ ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
 - [ ] Customize the selection effect of the cell.
-- [ ] Customize the navigation bar.
-- [ ] Customize the UI.
+- [x] Customize the navigation bar.
+- [x] Customize the UI.
 - [ ] User can view the app on various device sizes and orientations.
 - [x] Run your app on a real device.
 
@@ -35,8 +35,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. What good user interface or design looks like in an app like this, I don't have the best eye for design so learning more about how other people design their apps could help me get better at that.
+2.  How people implemented seeing the large image feature, it is in this readme but on the codepath assignment clicking on the poster should give you the trailer (which I think is a much cooler feature).
 
 ## Video Walkthrough
 
@@ -48,7 +48,7 @@ GIF created with [Kap](https://getkap.co/).
 
 ## Notes
 
-Flix with all of the required features as well as some cool stretch features like being able to search and being able to click on the movie poster within details view to view the trailer of that movie. 
+Flix with a basic dark look meant to emulate the darkness of the movies. Features include being able to see now playing movies in a table view and popular movies in a collection view, being able to search through those movies, being able to refresh and update what movies are shown, seeing a detail view of movies when you click on them, and being able to watch a movie trailer if you click on the movie poster in details view. I ran into quite a few challenges with implementing the features that did not have much guidance but with some time and debugging I eventually was able to figure it out.
 
 ## Credits
 
