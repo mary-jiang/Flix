@@ -7,6 +7,7 @@
 
 #import "DetailsViewController.h"
 #import "UIImageView+AFNetworking.h" //adds helper functions so we can make our images work
+#import "TrailerViewController.h"
 
 @interface DetailsViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *backdropView;
@@ -43,14 +44,22 @@
     [self.synopsisLabel sizeToFit];
 }
 
-/*
+
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+
+//    //the endpoint requires us to have the movie id to get the trailer information so this will put in the movie id into the api request by constructing the end point through string concatination
+    NSString *movieId = [NSString stringWithFormat:@"%@", self.movie[@"id"]]; //the id of the movie we are trying to get the trailer for, formated as a string so we can actually concat with it
+    TrailerViewController *test = [segue destinationViewController];
+    test.movieId = movieId; //send the movieId info over to the trailer view controller to deal with it
+
+    
 }
-*/
+
 
 @end
