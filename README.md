@@ -42,11 +42,10 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-Most features here:
-![](https://i.imgur.com/pmrnrMl.gif)
+![](https://i.imgur.com/774ISzb.gif)
 
-Network error: 
-![](https://i.imgur.com/TsVOfWk.gif)
+![](https://i.imgur.com/DBxRWpJ.gif)
+
 
 ## Notes
 
